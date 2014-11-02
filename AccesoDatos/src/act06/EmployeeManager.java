@@ -2,11 +2,14 @@ package act06;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class EmployeeManager {
 
 	public static final String path = "./resources/employee.bin";
 	private static final ArrayList<Employee> employeeList = new ArrayList();
+
 
 	// Crear un fichero con al menos 10 empleados de prueba de tres departamentos diferentes
 	private void dummy() {
@@ -40,7 +43,16 @@ public class EmployeeManager {
 	
 	// Crear un método que devuelva los empleados ordenados por apellido en un ArrayList
 	public ArrayList<Employee> listEmployee (Employee e){
-		return null;
+		employeeList.add(e);
+		employeeList.toString();
+		Collections.sort(employeeList, new Comparator<Employee>() {
+			@Override
+			public int compare(Employee emp1, Employee emp2) {
+				// TODO Auto-generated method stub
+				return emp1.getLastName().compareTo(emp2.getLastName());
+			}
+	    });
+		return employeeList;
 	}
 	
 	// Crear un método que devuelva el número de empleados de un departamento
