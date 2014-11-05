@@ -44,9 +44,8 @@ public class Employee implements Serializable {
 	}
 
 	public void setLastName(String lastName) {
-		if (lastName.length() < 20){
 		this.lastName = lastName;
-		} 
+		
 	}
 
 	public String getName() {
@@ -101,12 +100,13 @@ public class Employee implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
+		Dep
 		return super.equals(obj);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return this.name + this.id;
 	}
 
 }
