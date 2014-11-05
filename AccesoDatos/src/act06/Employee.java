@@ -1,6 +1,8 @@
 package act06;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -12,12 +14,16 @@ public class Employee implements Serializable {
 	private String name;
 	private String job;
 	private Date regis_date;
-	private int salary;
+	private float salary;
 	private int commission;
 	private int depNumber;
+	private SimpleDateFormat df;
+	private static int maxSize = 20;
 
 	public Employee(int id, String lastName, String name, String job,
 			Date regis_date, int salary, int commission, int depNumber) {
+		
+		df = new SimpleDateFormat("dd/MM/yyyy");
 		this.id = id;
 		this.lastName = lastName;
 		this.name = name;
@@ -27,8 +33,9 @@ public class Employee implements Serializable {
 		this.commission = commission;
 		this.depNumber = depNumber;
 	}
-	public Employee() {
 
+	public Employee() {
+		df = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
 	public int getId() {
@@ -36,7 +43,12 @@ public class Employee implements Serializable {
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		if (id > 0) {
+			this.id = id;
+		} else {
+			System.err.println("Id erroneo");
+			// this.id = 0;
+		}
 	}
 
 	public String getLastName() {
@@ -44,8 +56,12 @@ public class Employee implements Serializable {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
-		
+		if (lastName.length() < maxSize) {
+			this.lastName = lastName;
+		} else {
+			this.lastName = lastName.substring(0, maxSize);
+		}
+
 	}
 
 	public String getName() {
@@ -53,7 +69,14 @@ public class Employee implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if (name.length() < maxSize) {
+			this.name = name;
+		} else {
+			this.name = name.substring(0, maxSize);
+		}
+		// if (name.length() == 0){
+		// this.name = " ";
+		// }
 	}
 
 	public String getJob() {
@@ -61,23 +84,39 @@ public class Employee implements Serializable {
 	}
 
 	public void setJob(String job) {
-		this.job = job;
+		if (name.length() < maxSize) {
+			this.job = job;
+		} else {
+			this.job = job.substring(0, maxSize);
+		}
 	}
 
-	public Date getRegis_date() {
-		return regis_date;
+	public String getRegis_date() {
+
+		return df.format(regis_date).toString();
 	}
 
-	public void setRegis_date(Date regis_date) {
-		this.regis_date = regis_date;
+	public void setRegis_date(String regis_date) {
+
+		try {
+			this.regis_date = df.parse(regis_date);
+		} catch (ParseException e) {
+
+			this.regis_date = new Date();
+		}
+
 	}
 
-	public int getSalary() {
+	public float getSalary() {
 		return salary;
 	}
 
 	public void setSalary(int salary) {
-		this.salary = salary;
+		if (salary > 0) {
+			this.salary = salary;
+		} else {
+			System.err.println("Salario negativo");
+		}
 	}
 
 	public int getCommission() {
@@ -85,7 +124,12 @@ public class Employee implements Serializable {
 	}
 
 	public void setCommission(int commission) {
-		this.commission = commission;
+
+		if (commission > 0) {
+			this.commission = commission;
+		} else {
+			System.err.println("Comisi—n negativo");
+		}
 	}
 
 	public int getDepNumber() {
@@ -93,20 +137,38 @@ public class Employee implements Serializable {
 	}
 
 	public void setDepNumber(int depNumber) {
-		this.depNumber = depNumber;
-	}
 
-	
+		if (depNumber > 0) {
+			this.depNumber = depNumber;
+		} else {
+			System.err.println("Nœmero de departamento negativo");
+			// this.depNumber = 0;
+		}
+	}
 
 	@Override
 	public boolean equals(Object obj) {
-		Dep
-		return super.equals(obj);
+
+		Employee emp = (Employee) obj;
+
+		if (this.id == emp.id && this.lastName.equals(emp.lastName)
+				&& this.name.equals(emp.name) && this.job.equals(emp.job)
+				&& this.regis_date.equals(emp.regis_date)
+				&& this.salary == emp.salary
+				&& this.commission == emp.commission
+				&& this.depNumber == emp.depNumber) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return this.name + this.id;
+		return "Employee:" + "ID =" + id + ", Last name =" + lastName
+				+ ", Name =" + name + ", Job =" + job + ", Regist date ="
+				+ this.getRegis_date() + ", Salary=" + salary + ", Commission ="
+				+ commission + ", Departament number=" + depNumber + '}';
 	}
 
 }
