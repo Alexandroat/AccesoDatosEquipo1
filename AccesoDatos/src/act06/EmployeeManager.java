@@ -41,20 +41,29 @@ public class EmployeeManager {
 	// Crear un método que añada un nuevo empleado recibiendo los datos por
 	// parámetro
 	public boolean addEmployee(Employee e) {
+		employeeList.add(e);
 		return false;
 	}
 
-	// Crear un método que devuelva los empleados ordenados por apellido en un
-	// ArrayList
+	/**
+	 * @author Alejandro Acebedo
+	 * Devuelve una lista con todos los empleados ordenados
+	 * @param e
+	 * @return ArrayList employeeList
+	 */
+	
 	public ArrayList<Employee> listEmployee(Employee e) {
-		employeeList.add(e);
+		//employeeList.add(e);
+		addEmployee(e);
 		Collections.sort(employeeList, new Comparator<Employee>() {
 			@Override
 			public int compare(Employee emp1, Employee emp2) {
-				// TODO Auto-generated method stub
+				
 				return emp1.getLastName().compareTo(emp2.getLastName());
 			}
 		});
+		System.out.println(employeeList.toString());
+
 		return employeeList;
 	}
 

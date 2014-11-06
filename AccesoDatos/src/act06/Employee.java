@@ -6,6 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * 
+ * 
+ * @author Alejandro Acebedo
+ * 
+ */
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,22 +24,24 @@ public class Employee implements Serializable {
 	private int commission;
 	private int depNumber;
 	private SimpleDateFormat df;
-	private static int maxSize = 20;
+	private static final int maxSize = 20;
 
+	//Constructor con parametros
 	public Employee(int id, String lastName, String name, String job,
-			Date regis_date, int salary, int commission, int depNumber) {
-		
-		df = new SimpleDateFormat("dd/MM/yyyy");
-		this.id = id;
-		this.lastName = lastName;
-		this.name = name;
-		this.job = job;
-		this.regis_date = regis_date;
-		this.salary = salary;
-		this.commission = commission;
-		this.depNumber = depNumber;
-	}
+			String regis_date, int salary, int commission, int depNumber) {
 
+		df = new SimpleDateFormat("dd/MM/yyyy");
+		this.setId(id);
+		this.setLastName(lastName);
+		this.setName(name);
+		this.setJob(job);
+		this.setRegis_date(regis_date);
+		this.setSalary(salary);
+		this.setCommission(commission);
+		this.setDepNumber(depNumber);
+	}
+	
+	//Constructor sin parametros 
 	public Employee() {
 		df = new SimpleDateFormat("dd/MM/yyyy");
 	}
@@ -41,13 +49,14 @@ public class Employee implements Serializable {
 	public int getId() {
 		return id;
 	}
-
+	
+	
 	public void setId(int id) {
 		if (id > 0) {
 			this.id = id;
 		} else {
 			System.err.println("Id erroneo");
-			// this.id = 0;
+			this.id = 0;
 		}
 	}
 
@@ -60,6 +69,9 @@ public class Employee implements Serializable {
 			this.lastName = lastName;
 		} else {
 			this.lastName = lastName.substring(0, maxSize);
+		}
+		if (lastName.length() == 0) {
+			this.lastName = " ";
 		}
 
 	}
@@ -74,9 +86,9 @@ public class Employee implements Serializable {
 		} else {
 			this.name = name.substring(0, maxSize);
 		}
-		// if (name.length() == 0){
-		// this.name = " ";
-		// }
+		if (name.length() == 0) {
+			this.name = " ";
+		}
 	}
 
 	public String getJob() {
@@ -84,10 +96,13 @@ public class Employee implements Serializable {
 	}
 
 	public void setJob(String job) {
-		if (name.length() < maxSize) {
+		if (job.length() < maxSize) {
 			this.job = job;
 		} else {
 			this.job = job.substring(0, maxSize);
+		}
+		if (job.length() == 0) {
+			this.job = " ";
 		}
 	}
 
@@ -112,10 +127,11 @@ public class Employee implements Serializable {
 	}
 
 	public void setSalary(int salary) {
-		if (salary > 0) {
+		if (salary >= 0) {
 			this.salary = salary;
 		} else {
 			System.err.println("Salario negativo");
+			this.salary = 0;
 		}
 	}
 
@@ -125,10 +141,11 @@ public class Employee implements Serializable {
 
 	public void setCommission(int commission) {
 
-		if (commission > 0) {
+		if (commission >= 0) {
 			this.commission = commission;
 		} else {
 			System.err.println("Comisi—n negativo");
+			this.commission = 0;
 		}
 	}
 
@@ -138,11 +155,11 @@ public class Employee implements Serializable {
 
 	public void setDepNumber(int depNumber) {
 
-		if (depNumber > 0) {
+		if (depNumber >= 0) {
 			this.depNumber = depNumber;
 		} else {
 			System.err.println("Nœmero de departamento negativo");
-			// this.depNumber = 0;
+			this.depNumber = 0;
 		}
 	}
 
@@ -165,10 +182,11 @@ public class Employee implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Employee:" + "ID =" + id + ", Last name =" + lastName
-				+ ", Name =" + name + ", Job =" + job + ", Regist date ="
-				+ this.getRegis_date() + ", Salary=" + salary + ", Commission ="
-				+ commission + ", Departament number=" + depNumber + '}';
+		return "Employee:" + "ID = " + id + ", Last name = " + lastName
+				+ ", Name = " + name + ", Job = " + job + ", Regist date = "
+				+ this.getRegis_date() + ", Salary = " + salary
+				+ ", Commission = " + commission + ", Departament number = "
+				+ depNumber + '\n';
 	}
 
 }
