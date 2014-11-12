@@ -20,6 +20,9 @@ public class EmployeeManager {
 
 	static final String FILE = "./resources/emplyee.dat";
 	// Crear un fichero con al menos 10 empleados de prueba de tres departamentos diferentes
+
+
+	
 	
 	public void dummy() {
 		ArrayList<Employee> lista = new ArrayList<Employee>();
