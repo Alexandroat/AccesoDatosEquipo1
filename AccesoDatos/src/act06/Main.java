@@ -12,13 +12,16 @@ public class Main {
 		Employee e3 = new Employee(04, "Aster", "Ast", "Strabajo",
 				"01/01/1900", 3400, 34, 52);
 		
+	
+		
 		EmployeeManager em = new EmployeeManager();
 		
 		em.addEmployee(e);
 		em.addEmployee(e2);
-		em.listEmployee(e3);
+		em.addEmployee(e3);
+		em.listEmployee();
 	
-		//System.out.println(e.getLastName());
+		
 
 	}
 

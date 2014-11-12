@@ -126,7 +126,7 @@ public class Employee implements Serializable {
 		return salary;
 	}
 
-	public void setSalary(int salary) {
+	public void setSalary(float salary) {
 		if (salary >= 0) {
 			this.salary = salary;
 		} else {

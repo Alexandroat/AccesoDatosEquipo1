@@ -42,19 +42,17 @@ public class EmployeeManager {
 	// parámetro
 	public boolean addEmployee(Employee e) {
 		employeeList.add(e);
-		return false;
+		return true;
 	}
 
 	/**
 	 * @author Alejandro Acebedo
 	 * Devuelve una lista con todos los empleados ordenados
-	 * @param e
 	 * @return ArrayList employeeList
 	 */
 	
-	public ArrayList<Employee> listEmployee(Employee e) {
-		//employeeList.add(e);
-		addEmployee(e);
+	public ArrayList<Employee> listEmployee() {
+		
 		Collections.sort(employeeList, new Comparator<Employee>() {
 			@Override
 			public int compare(Employee emp1, Employee emp2) {
@@ -67,7 +65,7 @@ public class EmployeeManager {
 		return employeeList;
 	}
 
-	// Crear un método que devuelva el número de empleados de un departamento
+	// Crear un metodo que devuelva el numero de empleados de un departamento
 	public int numEmployeeDepartment(int idDep) {
 		return 0;
 	}
