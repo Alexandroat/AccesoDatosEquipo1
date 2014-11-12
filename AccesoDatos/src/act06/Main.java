@@ -3,8 +3,10 @@ package act06;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+EmployeeManager em = new EmployeeManager();
+		
+		em.dummy();
+		em.imprimirFicheroEmployee(EmployeeManager.FILE);
 	}
 
 }
