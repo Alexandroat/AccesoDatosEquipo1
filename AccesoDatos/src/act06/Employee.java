@@ -1,137 +1,204 @@
 package act06;
 
+import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
-public class Employee implements java.io.Serializable {
+/**
+ * 
+ * 
+ * @author Alejandro Acebedo
+ * 
+ */
+public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int id ;
-	private int job;
-	private String lastname;
+	private int id;
+	private String lastName;
 	private String name;
-	private Date regisDate;
-	private int salary;
-	private float commission;
+	private String job;
+	private Date regis_date;
+	private float salary;
+	private int commission;
 	private int depNumber;
-	private SimpleDateFormat format;
-	static final String DATE_FORMAT = "dd/MM/yyyy";
-	
-	
-///////////////////////////////////////////////////////////Constructores////////////////////////////////////////////////
-	public Employee(int id, String lastname, String name, int job,
-			String regisDate, int salary, float commission, int depNumber) {
-		format = new SimpleDateFormat();
-		setId(id);
-		setLastname(lastname);
-		setName(name);
-		setJob(job);
-		setRegisDate(regisDate);
-		setSalary(salary);
-		setCommission(commission);
-		setDepNumber(depNumber);
-		
+	private SimpleDateFormat df;
+	private static final int maxSize = 20;
+
+	// ///////////////Constructor con parametros////////
+	public Employee(int id, String lastName, String name, String job,
+			String regis_date, int salary, int commission, int depNumber) {
+
+		df = new SimpleDateFormat("dd/MM/yyyy");
+		this.setId(id);
+		this.setLastName(lastName);
+		this.setName(name);
+		this.setJob(job);
+		this.setRegis_date(regis_date);
+		this.setSalary(salary);
+		this.setCommission(commission);
+		this.setDepNumber(depNumber);
 	}
-	
+
+	// //////////////Constructor sin parametros////////
 	public Employee() {
-		format = new SimpleDateFormat();
+		df = new SimpleDateFormat("dd/MM/yyyy");
 	}
-//////////////////////////////////////////////////////Setters y Getters///////////////////////////////////////////////////
+
+	// /////////Getters y setters////////////////////
 	public int getId() {
 		return id;
 	}
+
+	// La comision ha de ser mayor que 0
 	public void setId(int id) {
-		this.id = id;
+		if (id > 0) {
+			this.id = id;
+		} else {
+			System.err.println("Id erroneo");
+			this.id = 0;
+		}
 	}
-	//maximo 20
-	public String getLastname() {
-		return lastname;
+
+	public String getLastName() {
+		return lastName;
 	}
-	
-	public void setLastname(String lastname) {
-		if (lastname.length()>20)
-			this.lastname = lastname.substring(0, 20);
-		else 
-			this.lastname = lastname;
+
+	/*
+	 * Si el apellido supera los 20 caracteres se quedara con los 20 primeros.
+	 */
+	public void setLastName(String lastName) {
+		if (lastName.length() < maxSize) {
+			this.lastName = lastName;
+		} else {
+			this.lastName = lastName.substring(0, maxSize);
+		}
+		if (lastName.length() == 0) {
+			this.lastName = " ";
+		}
+
 	}
-	//maximo 20
+
 	public String getName() {
 		return name;
 	}
+
+	/*
+	 * Si el nombre supera los 20 caracteres se quedara con los 20 primeros.
+	 */
 	public void setName(String name) {
-		if (name.length()>20)
-			this.name = name.substring(0, 20);
-		else
-		this.name = name;
+		if (name.length() < maxSize) {
+			this.name = name;
+		} else {
+			this.name = name.substring(0, maxSize);
+		}
+		if (name.length() == 0) {
+			this.name = " ";
+		}
 	}
-	public int getJob() {
+
+	public String getJob() {
 		return job;
 	}
-	public void setJob(int job) {
-		this.job = job;
+
+	/*
+	 * Si el trabajo supera los 20 caracteres se quedara con los 20 primeros.
+	 */
+	public void setJob(String job) {
+		if (job.length() < maxSize) {
+			this.job = job;
+		} else {
+			this.job = job.substring(0, maxSize);
+		}
+		if (job.length() == 0) {
+			this.job = " ";
+		}
 	}
 
+	public String getRegis_date() {
 
-	public int getSalary() {
+		return df.format(regis_date).toString();
+	}
+
+	public void setRegis_date(String regis_date) {
+
+		try {
+			this.regis_date = df.parse(regis_date);
+		} catch (ParseException e) {
+
+			this.regis_date = new Date();
+		}
+
+	}
+
+	public float getSalary() {
 		return salary;
 	}
-	
-	//Salario no puede ser negativo
-	public void setSalary(int salary) {
-		if (salary <= 0)
+
+	public void setSalary(float salary) {
+		if (salary >= 0) {
+			this.salary = salary;
+		} else {
+			System.err.println("Salario negativo");
 			this.salary = 0;
-		else 
-		this.salary = salary;
+		}
 	}
-	public float getCommission() {
+
+	public int getCommission() {
 		return commission;
 	}
-	//Comision no puede ser negativa
-	public void setCommission(float commission) {
-		if (depNumber <= 0)
-			this.commission = 0;
-		else 
+
+	// La comision ha de ser mayor o igual que 0
+	public void setCommission(int commission) {
+
+		if (commission >= 0) {
 			this.commission = commission;
+		} else {
+			System.err.println("Comisi—n negativo");
+			this.commission = 0;
+		}
 	}
+
 	public int getDepNumber() {
 		return depNumber;
 	}
-	//DeptNumber no puede ser negativo
+
+	// El numero de departamento ha de ser mayor o igual que 0
 	public void setDepNumber(int depNumber) {
-		if (depNumber <= 0)
-			this.depNumber = 0;
-		else 
+
+		if (depNumber >= 0) {
 			this.depNumber = depNumber;
-	}
-
-
-	public String getRegisDate() {
-		return format.format(regisDate);
-		 
-	}
-	
-	//Gestion fecha
-	public void setRegisDate(String regisDate) {
-		try{
-		
-			this.regisDate = new SimpleDateFormat(DATE_FORMAT).parse(regisDate);
-		}
-		catch (Exception e){
-			System.err.println("Error en el formato de fecha");
-			this.regisDate = new Date();
+		} else {
+			System.err.println("Nœmero de departamento negativo");
+			this.depNumber = 0;
 		}
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+
+		Employee emp = (Employee) obj;
+
+		if (this.id == emp.id && this.lastName.equals(emp.lastName)
+				&& this.name.equals(emp.name) && this.job.equals(emp.job)
+				&& this.regis_date.equals(emp.regis_date)
+				&& this.salary == emp.salary
+				&& this.commission == emp.commission
+				&& this.depNumber == emp.depNumber) {
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", lastname=" + lastname + ", name="
-				+ name + ", job=" + job + ", regisDate=" + getRegisDate()
-				+ ", salary=" + salary + ", commission=" + commission
-				+ ", depNumber=" + depNumber +"]";
+		return "Employee:" + "ID = " + id + ", Last name = " + lastName
+				+ ", Name = " + name + ", Job = " + job + ", Regist date = "
+				+ this.getRegis_date() + ", Salary = " + salary
+				+ ", Commission = " + commission + ", Departament number = "
+				+ depNumber + '\n';
 	}
-	
-	
-	
-}
 
+}

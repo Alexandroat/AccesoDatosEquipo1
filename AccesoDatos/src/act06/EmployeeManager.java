@@ -26,8 +26,7 @@ public class EmployeeManager {
 	
 	public void dummy() {
 		ArrayList<Employee> lista = new ArrayList<Employee>();
-		Employee e = new Employee(1, "fdez", "pepe", 1,
-				"11/11/2014", 1000, 100, 1);
+		Employee e = new Employee(1, "Goldfinger", "Jhon", "Director Adjunto", "11/11/2011", 30000, 5, 9);
 		lista.add(e);
 		
 		ObjectOutputStream streamOut = null;
@@ -139,7 +138,7 @@ public class EmployeeManager {
 			@Override
 			public int compare(Employee emp1, Employee emp2) {
 				
-				return emp1.getLastname().compareTo(emp2.getLastname());
+				return emp1.getLastName().compareTo(emp2.getLastName());
 			}
 		});
 		System.out.println(employeeList.toString());
