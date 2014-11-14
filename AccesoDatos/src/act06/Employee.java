@@ -26,7 +26,7 @@ public class Employee implements Serializable {
 	private SimpleDateFormat df;
 	private static final int maxSize = 20;
 
-	//Constructor con parametros
+	// ///////////////Constructor con parametros////////
 	public Employee(int id, String lastName, String name, String job,
 			String regis_date, int salary, int commission, int depNumber) {
 
@@ -40,17 +40,18 @@ public class Employee implements Serializable {
 		this.setCommission(commission);
 		this.setDepNumber(depNumber);
 	}
-	
-	//Constructor sin parametros 
+
+	// //////////////Constructor sin parametros////////
 	public Employee() {
 		df = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
+	// /////////Getters y setters////////////////////
 	public int getId() {
 		return id;
 	}
-	
-	
+
+	// La comision ha de ser mayor que 0
 	public void setId(int id) {
 		if (id > 0) {
 			this.id = id;
@@ -64,6 +65,9 @@ public class Employee implements Serializable {
 		return lastName;
 	}
 
+	/*
+	 * Si el apellido supera los 20 caracteres se quedara con los 20 primeros.
+	 */
 	public void setLastName(String lastName) {
 		if (lastName.length() < maxSize) {
 			this.lastName = lastName;
@@ -80,6 +84,9 @@ public class Employee implements Serializable {
 		return name;
 	}
 
+	/*
+	 * Si el nombre supera los 20 caracteres se quedara con los 20 primeros.
+	 */
 	public void setName(String name) {
 		if (name.length() < maxSize) {
 			this.name = name;
@@ -95,6 +102,9 @@ public class Employee implements Serializable {
 		return job;
 	}
 
+	/*
+	 * Si el trabajo supera los 20 caracteres se quedara con los 20 primeros.
+	 */
 	public void setJob(String job) {
 		if (job.length() < maxSize) {
 			this.job = job;
@@ -139,6 +149,7 @@ public class Employee implements Serializable {
 		return commission;
 	}
 
+	// La comision ha de ser mayor o igual que 0
 	public void setCommission(int commission) {
 
 		if (commission >= 0) {
@@ -153,6 +164,7 @@ public class Employee implements Serializable {
 		return depNumber;
 	}
 
+	// El numero de departamento ha de ser mayor o igual que 0
 	public void setDepNumber(int depNumber) {
 
 		if (depNumber >= 0) {
