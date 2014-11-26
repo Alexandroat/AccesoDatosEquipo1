@@ -1,6 +1,5 @@
 package act06;
 
-
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,33 +18,33 @@ public class EmployeeManager {
 	private static final ArrayList<Employee> employeeList = new ArrayList();
 
 	static final String FILE = "./resources/emplyee.dat";
-	// Crear un fichero con al menos 10 empleados de prueba de tres departamentos diferentes
 
+	// Crear un fichero con al menos 10 empleados de prueba de tres
+	// departamentos diferentes
 
-	
-	
-	public void dummy() {
+	public void dummy(int num) {
 		ArrayList<Employee> lista = new ArrayList<Employee>();
-		Employee e = new Employee(1, "Goldfinger", "Jhon", "Director Adjunto", "11/11/2011", 30000, 5, 9);
-		lista.add(e);
-		
+
+		for (int i = 1; i <= num; i++) {
+			lista.add(new Employee(i, "Goldfinger" + i, "Jhon" + i,
+					"Director Adjunto" + i, "11/11/2011", 30000 + i, 5 + i,
+					9 + i));
+		}
+
 		ObjectOutputStream streamOut = null;
-		
+
 		try {
 			streamOut = new ObjectOutputStream(new FileOutputStream(FILE));
-			for(Employee emp : lista){
+			for (Employee emp : lista) {
 				streamOut.writeObject(emp);
 			}
-	
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
-		finally{
-			if(streamOut!=null)
-			{
+		} finally {
+			if (streamOut != null) {
 				try {
 					streamOut.close();
 				} catch (IOException e1) {
@@ -53,57 +52,93 @@ public class EmployeeManager {
 				}
 			}
 		}
-		
+
 	}
-		
-		public void imprimirFicheroEmployee(String path) {
-			ObjectInputStream streamIn = null;
-			Employee emp;
-			
+
+	public void imprimirFicheroEmployee(String path) {
+		ObjectInputStream streamIn = null;
+		Employee emp;
+
+		try {
+			streamIn = new ObjectInputStream(new FileInputStream(path));
+
 			try {
-				streamIn = new ObjectInputStream (new FileInputStream (path));
-				
-				try{
-				while(true){
+				while (true) {
 					emp = (Employee) streamIn.readObject();
 					System.out.println(emp);
 				}
-				}catch (EOFException e) {
-				
-				}
-			} catch (FileNotFoundException e) {
-				System.err.println("File not found: " + e.getMessage());
+			} catch (EOFException e) {
 
-			} catch (IOException e) {
-				System.err.println("Error IO" + e.getMessage());
+			}
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found: " + e.getMessage());
 
-			} catch (ClassNotFoundException e) {
-				System.err.println("Class not found: " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Error IO" + e.getMessage());
 
-			}finally{
-				if(streamIn != null){
-					try {
-						streamIn.close();
-					} catch (IOException e) {
-						System.err.println("Error IO" + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.err.println("Class not found: " + e.getMessage());
 
-					}
+		} finally {
+			if (streamIn != null) {
+				try {
+					streamIn.close();
+				} catch (IOException e) {
+					System.err.println("Error IO" + e.getMessage());
+
 				}
 			}
-		
-			
 		}
-		
-		
+
+	}
 
 	// Load binary file in memory
 	public void LoadFile() {
 	}
 
-	// crea un método que liste un empleado por su id.
-
+	//
+	/**
+	 * @author Vladimir Bocancea, crea un método que liste un empleado por su
+	 *         id.
+	 * @return ArrayList employeeList
+	 */
 	public Employee getEmployee(int idEmp) {
-		return null;
+		ObjectInputStream streamIn = null;
+		Employee emp;
+		Employee emp2=null;
+
+		try {
+			streamIn = new ObjectInputStream(new FileInputStream(path));
+
+			try {
+				while (true) {
+					emp = (Employee) streamIn.readObject();
+					emp2 = emp;
+				}
+			} catch (EOFException e) {
+
+			}
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found: " + e.getMessage());
+
+		} catch (IOException e) {
+			System.err.println("Error IO" + e.getMessage());
+
+		} catch (ClassNotFoundException e) {
+			System.err.println("Class not found: " + e.getMessage());
+
+		} finally {
+			if (streamIn != null) {
+				try {
+					streamIn.close();
+				} catch (IOException e) {
+					System.err.println("Error IO" + e.getMessage());
+
+				}
+			}
+		}
+		return emp2;
+
 	}
 
 	// Crear un método que modifique el salario de un empleado con el id que
@@ -127,17 +162,17 @@ public class EmployeeManager {
 	}
 
 	/**
-	 * @author Alejandro Acebedo
-	 * Devuelve una lista con todos los empleados ordenados
+	 * @author Alejandro Acebedo Devuelve una lista con todos los empleados
+	 *         ordenados
 	 * @return ArrayList employeeList
 	 */
-	
+
 	public ArrayList<Employee> listEmployee() {
-		
+
 		Collections.sort(employeeList, new Comparator<Employee>() {
 			@Override
 			public int compare(Employee emp1, Employee emp2) {
-				
+
 				return emp1.getLastName().compareTo(emp2.getLastName());
 			}
 		});

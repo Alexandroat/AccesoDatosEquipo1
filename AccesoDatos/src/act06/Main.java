@@ -9,9 +9,9 @@ public class Main {
 
 EmployeeManager em = new EmployeeManager();
 		
-		em.dummy();
-		em.imprimirFicheroEmployee(EmployeeManager.FILE);
-
+		em.dummy(10);
+		//em.imprimirFicheroEmployee(EmployeeManager.FILE);
+em.getEmployee(5);
 	}
 
 }
