@@ -98,23 +98,24 @@ public class EmployeeManager {
 
 	//
 	/**
-	 * @author Vladimir Bocancea, 
-	 * crea un método que liste un empleado por su
-	 *         id.
-	 * @return ArrayemployeeList
+	 * @author Vladimir Bocancea
+	 * 
+	 *         crea un método que liste un empleado por su id
+	 * 
+	 * @return empleado por su id
 	 */
 	public Employee getEmployee(int idEmp) {
 		ObjectInputStream streamIn = null;
-		Employee emp=null;
+		Employee emp = null;
 		boolean noEncontrado = true;
 		try {
-			streamIn = new ObjectInputStream(new FileInputStream(path));
+			streamIn = new ObjectInputStream(new FileInputStream(FILE));
 
 			try {
 				while (noEncontrado) {
 					emp = (Employee) streamIn.readObject();
-					if(idEmp == emp.getId());
-						noEncontrado=false;
+					if (emp.getId() == idEmp)
+						noEncontrado = false;
 				}
 			} catch (EOFException e) {
 
@@ -138,7 +139,8 @@ public class EmployeeManager {
 				}
 			}
 		}
-		if(!noEncontrado) return emp;
+		if (!noEncontrado)
+			return emp;
 		return null;
 
 	}
