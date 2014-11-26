@@ -98,9 +98,10 @@ public class EmployeeManager {
 
 	//
 	/**
-	 * @author Vladimir Bocancea, crea un método que liste un empleado por su
+	 * @author Vladimir Bocancea, 
+	 * crea un método que liste un empleado por su
 	 *         id.
-	 * @return ArrayList employeeList
+	 * @return employeeList
 	 */
 	public Employee getEmployee(int idEmp) {
 		ObjectInputStream streamIn = null;
