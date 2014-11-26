@@ -101,20 +101,20 @@ public class EmployeeManager {
 	 * @author Vladimir Bocancea, 
 	 * crea un método que liste un empleado por su
 	 *         id.
-	 * @return employeeList
+	 * @return ArrayemployeeList
 	 */
 	public Employee getEmployee(int idEmp) {
 		ObjectInputStream streamIn = null;
-		Employee emp;
-		Employee emp2=null;
-
+		Employee emp=null;
+		boolean noEncontrado = true;
 		try {
 			streamIn = new ObjectInputStream(new FileInputStream(path));
 
 			try {
-				while (true) {
+				while (noEncontrado) {
 					emp = (Employee) streamIn.readObject();
-					emp2 = emp;
+					if(idEmp == emp.getId());
+						noEncontrado=false;
 				}
 			} catch (EOFException e) {
 
@@ -138,7 +138,8 @@ public class EmployeeManager {
 				}
 			}
 		}
-		return emp2;
+		if(!noEncontrado) return emp;
+		return null;
 
 	}
 

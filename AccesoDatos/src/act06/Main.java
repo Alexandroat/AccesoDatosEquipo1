@@ -10,7 +10,7 @@ public class Main {
 EmployeeManager em = new EmployeeManager();
 		
 		em.dummy(10);
-		//em.imprimirFicheroEmployee(EmployeeManager.FILE);
+//		em.imprimirFicheroEmployee(EmployeeManager.FILE);
 em.getEmployee(5);
 	}
 
