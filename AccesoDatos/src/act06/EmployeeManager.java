@@ -1,13 +1,8 @@
 package act06;
 
-import java.io.EOFException;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,157 +12,121 @@ public class EmployeeManager {
 	public static final String path = "./resources/employee.bin";
 	private static final ArrayList<Employee> employeeList = new ArrayList();
 
-	static final String FILE = "./resources/emplyee.dat";
-
-	// Crear un fichero con al menos 10 empleados de prueba de tres
-	// departamentos diferentes
-
-	public void dummy(int num) {
-		ArrayList<Employee> lista = new ArrayList<Employee>();
-
-		for (int i = 1; i <= num; i++) {
-			lista.add(new Employee(i, "Goldfinger" + i, "Jhon" + i,
-					"Director Adjunto" + i, "11/11/2011", 30000 + i, 5 + i,
-					9 + i));
+	/**
+	 * Crear un fichero con al menos 10 empleados de prueba de tres
+	 * departamentos diferentes
+	 * 
+	 * @author VLad
+	 */
+	public void dummy() {
+		for (int i = 1; i < 10; i++) {
+			employeeList.add(new Employee(i, "lastName" + i, "name" + i, "job"
+					+ i, "regis_date" + i, 1000 + i, 5 + i, 10 + i));
 		}
-
-		ObjectOutputStream streamOut = null;
-
+		RandomAccessFile streamOut = null;
 		try {
-			streamOut = new ObjectOutputStream(new FileOutputStream(FILE));
-			for (Employee emp : lista) {
-				streamOut.writeObject(emp);
-			}
-
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} finally {
-			if (streamOut != null) {
-				try {
-					streamOut.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		}
-
-	}
-
-	public void imprimirFicheroEmployee(String path) {
-		ObjectInputStream streamIn = null;
-		Employee emp;
-
-		try {
-			streamIn = new ObjectInputStream(new FileInputStream(path));
-
-			try {
-				while (true) {
-					emp = (Employee) streamIn.readObject();
-					System.out.println(emp);
-				}
-			} catch (EOFException e) {
-
+			streamOut = new RandomAccessFile(path, "rw");
+			for (Employee Employ : employeeList) {
+				streamOut.writeInt(Employ.getId());
+				streamOut.writeChars(Employ.getLastName());
+				streamOut.writeChars(Employ.getName());
+				streamOut.writeChars(Employ.getJob());
+				streamOut.writeChars(Employ.getRegis_date());
+				streamOut.writeFloat(Employ.getSalary());
+				streamOut.writeInt(Employ.getCommission());
+				streamOut.writeInt(Employ.getDepNumber());
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("File not found: " + e.getMessage());
-
+			System.err.println("Fichero no encontrado " + e.getMessage());
 		} catch (IOException e) {
-			System.err.println("Error IO" + e.getMessage());
-
-		} catch (ClassNotFoundException e) {
-			System.err.println("Class not found: " + e.getMessage());
-
+			System.err.println("Error E/S " + e.getMessage());
 		} finally {
-			if (streamIn != null) {
+			if (streamOut != null)
 				try {
-					streamIn.close();
+					streamOut.close();
 				} catch (IOException e) {
-					System.err.println("Error IO" + e.getMessage());
-
+					System.err.println("Error E/S " + e.getMessage());
 				}
-			}
 		}
-
 	}
 
 	// Load binary file in memory
 	public void LoadFile() {
 	}
 
-	//
 	/**
-	 * @author Vladimir Bocancea
+	 * crea un mÈtodo que liste un empleado por su id.
 	 * 
-	 *         crea un m√©todo que liste un empleado por su id
-	 * 
-	 * @return empleado por su id
+	 * @author VLad
+	 * @param idEmp
+	 * @return empleado
 	 */
+
 	public Employee getEmployee(int idEmp) {
-		ObjectInputStream streamIn = null;
-		Employee emp = null;
-		boolean noEncontrado = true;
-		try {
-			streamIn = new ObjectInputStream(new FileInputStream(FILE));
-
-			try {
-				while (noEncontrado) {
-					emp = (Employee) streamIn.readObject();
-					if (emp.getId() == idEmp)
-						noEncontrado = false;
-				}
-			} catch (EOFException e) {
-
-			}
-		} catch (FileNotFoundException e) {
-			System.err.println("File not found: " + e.getMessage());
-
-		} catch (IOException e) {
-			System.err.println("Error IO" + e.getMessage());
-
-		} catch (ClassNotFoundException e) {
-			System.err.println("Class not found: " + e.getMessage());
-
-		} finally {
-			if (streamIn != null) {
-				try {
-					streamIn.close();
-				} catch (IOException e) {
-					System.err.println("Error IO" + e.getMessage());
-
-				}
+		Employee empleado = null;
+		for (int i = 0; i < employeeList.size(); i++) {
+			if (employeeList.get(i).getId() == idEmp) {
+				empleado = employeeList.get(i);
+				System.out.println("buscado empleado por id " + idEmp
+						+ empleado);
 			}
 		}
-		if (!noEncontrado)
-			return emp;
-		return null;
-
+		return empleado;
 	}
 
-	// Crear un m√©todo que modifique el salario de un empleado con el id que
-	// recibe y el nuevo salario por par√°metro
+	// Crear un mÈtodo que modifique el salario de un empleado con el id que
+	// recibe y el nuevo salario por par·metro
 
-	public boolean getEmployee(int idEmp, double newSalary) {
-		return false;
+	public boolean getEmployee(int idEmp, float newSalary) {
+		boolean hecho = false;
+
+		for (int i = 0; i < employeeList.size(); i++) {
+
+			if (employeeList.get(i).getId() == idEmp) {
+
+				employeeList.get(i).setSalary(newSalary);
+
+				if (employeeList.get(i).getSalary() == newSalary) {
+					hecho = true;
+				}
+			}
+
+		} // end for
+
+		listEmployee(); // volver a listar opcion quitar
+
+		return hecho;
 	}
 
-	// Crear un m√©todo que elimine un empleado con el id que recibe por
-	// par√°metro
+	/**
+	 * Crear un mÈtodo que elimine un empleado con el id que recibe por
+	 * 
+	 * @author VLad
+	 * @param id
+	 * @return deleted
+	 */
 	public boolean deleteEmployee(int id) {
-		return false;
+		boolean deleted = false;
+		for (int i = 0; i < employeeList.size(); i++) {
+			if (employeeList.get(i).getId() == id) {
+				employeeList.remove(i);
+				deleted = true;
+			}
+		}
+		return deleted;
 	}
 
-	// Crear un m√©todo que a√±ada un nuevo empleado recibiendo los datos por
-	// par√°metro
+	// Crear un mÈtodo que aÒada un nuevo empleado recibiendo los datos por
+	// par·metro
 	public boolean addEmployee(Employee e) {
 		employeeList.add(e);
-		return true;
+		return false;
 	}
 
 	/**
 	 * @author Alejandro Acebedo Devuelve una lista con todos los empleados
 	 *         ordenados
+	 * @param e
 	 * @return ArrayList employeeList
 	 */
 
@@ -185,21 +144,35 @@ public class EmployeeManager {
 		return employeeList;
 	}
 
-	// Crear un metodo que devuelva el numero de empleados de un departamento
+	// Crear un mÈtodo que devuelva el n˙mero de empleados de un departamento
 	public int numEmployeeDepartment(int idDep) {
 		return 0;
 	}
 
-	// Crear un m√©todo que devuelva la lista de departamentos sin repetir en un
+	// Crear un mÈtodo que devuelva la lista de departamentos sin repetir en un
 	// ArrayList
 	public ArrayList<Deparment> getDepartment() {
 		return null;
 	}
 
-	// Crear un m√©todo que devuelva el sueldo medio de los empleados de un
-	// departamento recibido por par√°metro
+	// Crear un mÈtodo que devuelva el sueldo medio de los empleados de un
+	// departamento recibido por par·metro
 	public int averagePaymentDepartment(int idDep) {
-		return 0;
+		int mediaSalario = 0;
+		int sumadesalarios = 0;
+		int contador = 0;
+		for (int i = 0; i < employeeList.size(); i++) {
+			if (employeeList.get(i).getDepNumber() == idDep) {
+				sumadesalarios += employeeList.get(i).getSalary();
+				contador++;
+			}
+		}
+		mediaSalario = sumadesalarios / contador;
+		System.out
+				.println("Sumasalarios= " + sumadesalarios
+						+ " numero de gente " + contador + " su media ="
+						+ mediaSalario);
+		return mediaSalario;
 	}
 
 }

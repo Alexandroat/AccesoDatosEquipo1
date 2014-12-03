@@ -1,4 +1,5 @@
 package act06;
+
 import java.io.Serializable;
 
 public class Deparment {
